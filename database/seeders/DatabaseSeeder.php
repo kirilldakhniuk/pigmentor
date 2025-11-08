@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Color;
 use App\Models\Palette;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -17,23 +18,25 @@ class DatabaseSeeder extends Seeder
             'name' => 'Nord',
         ]);
 
-        $nordPalette->colors()->createMany([
-            ['hex' => '#2E3440'],
-            ['hex' => '#3B4252'],
-            ['hex' => '#434C5E'],
-            ['hex' => '#4C566A'],
-            ['hex' => '#D8DEE9'],
-            ['hex' => '#E5E9F0'],
-            ['hex' => '#ECEFF4'],
-            ['hex' => '#8FBCBB'],
-            ['hex' => '#88C0D0'],
-            ['hex' => '#81A1C1'],
-            ['hex' => '#5E81AC'],
-            ['hex' => '#BF616A'],
-            ['hex' => '#D08770'],
-            ['hex' => '#EBCB8B'],
-            ['hex' => '#A3BE8C'],
-            ['hex' => '#B48EAD'],
-        ]);
+        Color::upsert([
+            ['hex' => '#2e3440'],
+            ['hex' => '#3b4252'],
+            ['hex' => '#434c5e'],
+            ['hex' => '#4c566a'],
+            ['hex' => '#d8dee9'],
+            ['hex' => '#e5e9f0'],
+            ['hex' => '#eceff4'],
+            ['hex' => '#8fbcbb'],
+            ['hex' => '#88c0d0'],
+            ['hex' => '#81a1c1'],
+            ['hex' => '#5e81ac'],
+            ['hex' => '#bf616a'],
+            ['hex' => '#d08770'],
+            ['hex' => '#ebcb8b'],
+            ['hex' => '#a3be8c'],
+            ['hex' => '#b48ead'],
+        ], uniqueBy: 'hex');
+
+        Color::each(fn ($color) => $nordPalette->colors()->attach($color));
     }
 }
