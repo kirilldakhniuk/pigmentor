@@ -11,14 +11,14 @@ $pickColor = function ($color) {
 
     $this->history[] = $color;
 
-    Cache::put('picks-history', $this->history, now()->addMinute());
+    Cache::put('picks-history', $this->history, now()->addWeek());
 
     $this->dispatch('color-picked', color: $color);
 };
 
 ?>
 
-<div>
+<div class="flex justify-between w-full">
     <flux:button
         x-data
         @click="new EyeDropper().open().then(r => $wire.pickColor(r.sRGBHex)).catch(e => {})"
@@ -27,7 +27,7 @@ $pickColor = function ($color) {
         square
     />
 
-    <flux:button href="{{ route('palettes.create') }}" class="cursor-pointer" icon="plus" square/>
-
-    <flux:button class="cursor-pointer" icon="cog" square/>
+    <flux:button href="{{ route('palettes.create') }}" data-test="add-new-palette" class="cursor-pointer" icon="plus">
+        {{ __('Add New Palette') }}
+    </flux:button>
 </div>
