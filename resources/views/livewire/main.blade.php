@@ -60,60 +60,54 @@ $deletePalette = function ($id) {
 ?>
 
 <div>
-    <flux:heading accent="true">
-        {{ __('Color History') }}
-    </flux:heading>
-    <flux:card size="sm" class="space-y-2 mt-2">
-    @forelse($history as $color)
-        <flux:context>
-            <flux:button wire:click="copyColor('{{ $color }}')" class="cursor-pointer"
-                         style="background-color: {{ $color }} !important"/>
+    <flux:accordion.item heading="{{ __('Color History') }}" expanded>
+        <flux:card size="sm" class="space-y-2 mt-2">
+            @forelse($history as $color)
+                <flux:context>
+                    <flux:button wire:click="copyColor('{{ $color }}')" class="cursor-pointer"
+                                 style="background-color: {{ $color }} !important"/>
 
-            <flux:menu>
-                <flux:menu.item wire:click="copyColor('{{ $color }}')" icon="copy">{{ __('Copy') }}</flux:menu.item>
-                <flux:menu.item wire:click="deleteColor('{{ $color }}')" icon="trash"
-                                variant="danger">{{ __('Delete') }}</flux:menu.item>
-            </flux:menu>
-        </flux:context>
-    @empty
-        {{ __('No history yet') }}
-    @endforelse
-    </flux:card>
-
-    <flux:heading accent="true" class="my-2">
-        {{ __('Palettes') }}
-    </flux:heading>
-
-    @foreach($palettes as $palette)
-        <flux:card size="sm" class="space-y-2 my-2">
-        <div class="flex justify-between items-center">
-            <flux:heading>
-                {{ $palette->name }}
-            </flux:heading>
-
-            <flux:dropdown>
-                <flux:button icon="ellipsis-horizontal" variant="subtle" class="cursor-pointer hover:bg-transparent!"/>
-                <flux:menu>
-                    <flux:menu.item icon="pencil-square" kbd="⌘S">Edit</flux:menu.item>
-                    <flux:menu.item icon="document-duplicate" kbd="⌘D">Duplicate</flux:menu.item>
-                    <flux:menu.item wire:click="deletePalette('{{ $palette->id }}')" icon="trash" variant="danger" kbd="⌘⌫">Delete</flux:menu.item>
-                </flux:menu>
-            </flux:dropdown>
-        </div>
-
-        @foreach($palette->colors as $color)
-            <flux:context>
-                <flux:button wire:click="copyColor('{{ $color->hex }}')" class="cursor-pointer"
-                             style="background-color: {{ $color->hex }} !important"/>
-
-                <flux:menu>
-                    <flux:menu.item wire:click="copyColor('{{ $color->hex }}')"
-                                    icon="copy">{{ __('Copy') }}</flux:menu.item>
-                    <flux:menu.item wire:click="copyColor('{{ $color->hex }}')" icon="trash"
-                                    variant="danger">{{ __('Delete') }}</flux:menu.item>
-                </flux:menu>
-            </flux:context>
-        @endforeach
+                    <flux:menu>
+                        <flux:menu.item wire:click="copyColor('{{ $color }}')" icon="copy">{{ __('Copy') }}</flux:menu.item>
+                        <flux:menu.item wire:click="deleteColor('{{ $color }}')" icon="trash"
+                                        variant="danger">{{ __('Delete') }}</flux:menu.item>
+                    </flux:menu>
+                </flux:context>
+            @empty
+                {{ __('No history yet') }}
+            @endforelse
         </flux:card>
-    @endforeach
+    </flux:accordion.item>
+
+    <flux:accordion.item heading="{{ __('Palettes') }}" expanded>
+        @foreach($palettes as $palette)
+            <flux:card size="sm" class="space-y-2 my-2">
+            <div class="flex justify-between items-center">
+                <flux:heading>
+                    {{ $palette->name }}
+                </flux:heading>
+
+                <flux:dropdown>
+                    <flux:button icon="ellipsis-horizontal" variant="subtle" class="cursor-pointer hover:bg-transparent!"/>
+                    <flux:menu>
+                        <flux:navmenu.item href="{{ route('palettes.edit', $palette) }}" icon="pencil-square">{{ __('Edit') }}</flux:navmenu.item>
+                        <flux:menu.item wire:click="deletePalette('{{ $palette->id }}')" icon="trash" variant="danger">{{ __('Remove') }}</flux:menu.item>
+                    </flux:menu>
+                </flux:dropdown>
+            </div>
+
+            @foreach($palette->colors as $color)
+                <flux:context>
+                    <flux:button wire:click="copyColor('{{ $color->hex }}')" class="cursor-pointer"
+                                 style="background-color: {{ $color->hex }} !important"/>
+
+                    <flux:menu>
+                        <flux:menu.item wire:click="copyColor('{{ $color->hex }}')"
+                                        icon="copy">{{ __('Copy') }}</flux:menu.item>
+                    </flux:menu>
+                </flux:context>
+            @endforeach
+            </flux:card>
+        @endforeach
+    </flux:accordion.item>
 </div>

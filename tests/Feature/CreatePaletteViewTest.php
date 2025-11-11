@@ -6,7 +6,7 @@ it('requires palette name', function () {
     $component = Volt::test('palettes.create');
 
     $component->call('save')->assertHasErrors([
-        'name' => ['required'],
+        'form.name' => ['required'],
     ]);
 });
 
@@ -15,14 +15,14 @@ it('requires picked color to be valid hex color', function () {
 
     $component->set('hex', 'string');
 
-    $component->call('pickColor')->assertHasErrors([
+    $component->assertHasErrors([
         'hex' => ['hex_color'],
     ]);
 });
 
 test('new palette can be added', function () {
     $component = Volt::test('palettes.create')
-        ->set('name', fake()->word);
+        ->set('form.name', fake()->word);
 
     $component
         ->call('save')

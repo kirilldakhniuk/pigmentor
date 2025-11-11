@@ -9,3 +9,6 @@ Route::get('/', function () {
 
 Volt::route('palettes/create', 'palettes.create')
     ->name('palettes.create');
+
+Volt::route('palettes/{palette}/edit', 'palettes.edit')
+    ->name('palettes.edit');

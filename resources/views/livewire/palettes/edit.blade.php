@@ -1,6 +1,5 @@
 <?php
 
-use App\Livewire\Forms\CreatePaletteForm;
 use App\Livewire\Forms\PaletteForm;
 use App\Models\Color;
 use App\Models\Palette;
@@ -8,14 +7,13 @@ use function Livewire\Volt\{form, layout, state, mount, updated};
 
 state([
     'hex',
-    'pickedColors',
-    'existingColors',
-    'fromColorHistory',
+    'palette',
     'fromAnotherPalette',
+    'fromColorHistory',
 ]);
 
-mount(function () {
-    $this->existingColors = Color::all()->pluck('hex')->toArray();
+mount(function (Palette $palette) {
+    $this->form->setPalette($palette);
 });
 
 layout('components.layouts.app');
@@ -25,7 +23,7 @@ form(PaletteForm::class);
 updated([
     'hex' => function ($value) {
         $this->validate([
-            'hex' => 'hex_color',
+            'hex' => 'required|hex_color',
         ]);
 
         $this->form->colors[] = $value;
@@ -49,15 +47,18 @@ $pipetteColor = fn(string $hex) => $this->form->pipetteColorToPalette($hex);
 $removeFromPalette = fn(string $hex) => $this->form->removeFromPalette($hex);
 
 $save = function () {
-    $this->form->store();
+    $this->form->update();
 
     $this->redirectRoute('home');
 };
+
 ?>
 
 <div>
     <flux:header>
-        <flux:button href="{{ route('home') }}">Back</flux:button>
+        <flux:button href="{{ route('home') }}">
+            {{ __('Back') }}
+        </flux:button>
     </flux:header>
 
     <flux:main>
@@ -73,8 +74,8 @@ $save = function () {
                         <flux:button class="cursor-pointer" style="background-color: {{ $color }} !important"/>
 
                         <flux:menu>
-                            <flux:menu.item wire:click="deleteColor('{{ $color }}')" icon="trash"
-                                            variant="danger">{{ __('Delete') }}</flux:menu.item>
+                            <flux:menu.item wire:click="removeFromPalette('{{ $color }}')" icon="trash"
+                                            variant="danger">{{ __('Remove') }}</flux:menu.item>
                         </flux:menu>
                     </flux:context>
                 @empty
@@ -90,10 +91,10 @@ $save = function () {
                     icon="pipette"
                 />
 
-                <flux:input wire:model.blur="hex" placeholder="{{ __('Enter Hex Value') }}"></flux:input>
+                <flux:input wire:model.blur="hex" placeholder="Enter Hex Value"></flux:input>
             </flux:field>
 
-            <flux:pillbox wire:model.live.debounce="fromColorHistory" searchable
+            <flux:pillbox wire:model.live.debounce="fromColorHistory"
                           placeholder="{{ __('Select from Color History') }}">
                 @foreach(Cache::get('picks-history', []) as $color)
                     <flux:pillbox.option value="{{ $color }}">
@@ -109,7 +110,7 @@ $save = function () {
 
             <flux:pillbox wire:model.live="fromAnotherPalette" searchable
                           placeholder="{{ __('Select from Other Palettes') }}">
-                @foreach($existingColors as $color)
+                @foreach(Color::all()->pluck('hex')->toArray() as $color)
                     <flux:pillbox.option value="{{ $color }}">
                         <div class="flex items-center gap-2">
                             <flux:button class="cursor-pointer"
@@ -122,7 +123,7 @@ $save = function () {
             </flux:pillbox>
 
             <flux:button type="submit" class="cursor-pointer w-full">
-                {{ __('Create Palette') }}
+                {{ __('Update Palette') }}
             </flux:button>
         </form>
     </flux:main>
