@@ -1,12 +1,12 @@
 <?php
 
 use App\Models\Palette;
-use Livewire\Volt\Volt;
+use Livewire\Livewire;
 
 it('requires palette name', function () {
     $palette = Palette::factory()->create();
 
-    $component = Volt::test('palettes.edit', [
+    $component = Livewire::test('palettes.edit', [
         'palette' => $palette,
     ]);
 
@@ -20,7 +20,7 @@ it('requires palette name', function () {
 it('requires entered color to be valid hex color', function () {
     $palette = Palette::factory()->create();
 
-    $component = Volt::test('palettes.edit', [
+    $component = Livewire::test('palettes.edit', [
         'palette' => $palette,
     ]);
 
@@ -36,7 +36,7 @@ test('palette name can be updated', function () {
         'name' => 'foo',
     ]);
 
-    $component = Volt::test('palettes.edit', ['palette' => $palette])
+    $component = Livewire::test('palettes.edit', ['palette' => $palette])
         ->set('form.name', 'bar');
 
     $component
@@ -50,7 +50,7 @@ test('palette name can be updated', function () {
 test('a color can be added to palette', function () {
     $palette = Palette::factory()->create();
 
-    $component = Volt::test('palettes.edit', ['palette' => $palette]);
+    $component = Livewire::test('palettes.edit', ['palette' => $palette]);
 
     $color = fake()->hexColor;
 

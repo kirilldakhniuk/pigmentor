@@ -1,59 +1,3 @@
-<?php
-
-use App\Livewire\Forms\PaletteForm;
-use App\Models\Color;
-use App\Models\Palette;
-use function Livewire\Volt\{form, layout, state, mount, updated};
-
-state([
-    'hex',
-    'palette',
-    'fromAnotherPalette',
-    'fromColorHistory',
-]);
-
-mount(function (Palette $palette) {
-    $this->form->setPalette($palette);
-});
-
-layout('components.layouts.app');
-
-form(PaletteForm::class);
-
-updated([
-    'hex' => function ($value) {
-        $this->validate([
-            'hex' => 'required|hex_color',
-        ]);
-
-        $this->form->colors[] = $value;
-
-        $this->reset('hex');
-    },
-    'fromAnotherPalette' => function ($value) {
-        $this->form->colors[] = $value;
-
-        $this->reset('fromAnotherPalette');
-    },
-    'fromColorHistory' => function ($value) {
-        $this->form->colors[] = $value;
-
-        $this->reset('fromColorHistory');
-    }
-]);
-
-$pipetteColor = fn(string $hex) => $this->form->pipetteColorToPalette($hex);
-
-$removeFromPalette = fn(string $hex) => $this->form->removeFromPalette($hex);
-
-$save = function () {
-    $this->form->update();
-
-    $this->redirectRoute('home');
-};
-
-?>
-
 <div>
     <flux:header>
         <flux:button href="{{ route('home') }}">
@@ -110,7 +54,7 @@ $save = function () {
 
             <flux:pillbox wire:model.live="fromAnotherPalette" searchable
                           placeholder="{{ __('Select from Other Palettes') }}">
-                @foreach(Color::all()->pluck('hex')->toArray() as $color)
+                @foreach($existingColors as $color)
                     <flux:pillbox.option value="{{ $color }}">
                         <div class="flex items-center gap-2">
                             <flux:button class="cursor-pointer"

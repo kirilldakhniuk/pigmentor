@@ -1,9 +1,9 @@
 <?php
 
-use Livewire\Volt\Volt;
+use Livewire\Livewire;
 
 it('requires palette name', function () {
-    $component = Volt::test('palettes.create');
+    $component = Livewire::test('palettes.create');
 
     $component->call('save')->assertHasErrors([
         'form.name' => ['required'],
@@ -11,7 +11,7 @@ it('requires palette name', function () {
 });
 
 it('requires picked color to be valid hex color', function () {
-    $component = Volt::test('palettes.create');
+    $component = Livewire::test('palettes.create');
 
     $component->set('hex', 'string');
 
@@ -21,7 +21,7 @@ it('requires picked color to be valid hex color', function () {
 });
 
 test('new palette can be added', function () {
-    $component = Volt::test('palettes.create')
+    $component = Livewire::test('palettes.create')
         ->set('form.name', fake()->word);
 
     $component

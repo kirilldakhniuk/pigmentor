@@ -1,60 +1,3 @@
-<?php
-
-use App\Livewire\Forms\CreatePaletteForm;
-use App\Livewire\Forms\PaletteForm;
-use App\Models\Color;
-use App\Models\Palette;
-use function Livewire\Volt\{form, layout, state, mount, updated};
-
-state([
-    'hex',
-    'pickedColors',
-    'existingColors',
-    'fromColorHistory',
-    'fromAnotherPalette',
-]);
-
-mount(function () {
-    $this->existingColors = Color::all()->pluck('hex')->toArray();
-});
-
-layout('components.layouts.app');
-
-form(PaletteForm::class);
-
-updated([
-    'hex' => function ($value) {
-        $this->validate([
-            'hex' => 'hex_color',
-        ]);
-
-        $this->form->colors[] = $value;
-
-        $this->reset('hex');
-    },
-    'fromAnotherPalette' => function ($value) {
-        $this->form->colors[] = $value;
-
-        $this->reset('fromAnotherPalette');
-    },
-    'fromColorHistory' => function ($value) {
-        $this->form->colors[] = $value;
-
-        $this->reset('fromColorHistory');
-    }
-]);
-
-$pipetteColor = fn(string $hex) => $this->form->pipetteColorToPalette($hex);
-
-$removeFromPalette = fn(string $hex) => $this->form->removeFromPalette($hex);
-
-$save = function () {
-    $this->form->store();
-
-    $this->redirectRoute('home');
-};
-?>
-
 <div>
     <flux:header>
         <flux:button href="{{ route('home') }}">Back</flux:button>
@@ -73,7 +16,7 @@ $save = function () {
                         <flux:button class="cursor-pointer" style="background-color: {{ $color }} !important"/>
 
                         <flux:menu>
-                            <flux:menu.item wire:click="deleteColor('{{ $color }}')" icon="trash"
+                            <flux:menu.item wire:click="removeFromPalette('{{ $color }}')" icon="trash"
                                             variant="danger">{{ __('Delete') }}</flux:menu.item>
                         </flux:menu>
                     </flux:context>

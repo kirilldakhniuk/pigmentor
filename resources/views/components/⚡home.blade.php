@@ -1,4 +1,14 @@
-<x-layouts.app>
+<?php
+
+use Livewire\Component;
+
+new class extends Component
+{
+    //
+};
+?>
+
+<div>
     <flux:header>
         <livewire:toolbar />
     </flux:header>
@@ -8,4 +18,4 @@
     <flux:main>
         <livewire:main />
     </flux:main>
-</x-layouts.app>
+</div>
