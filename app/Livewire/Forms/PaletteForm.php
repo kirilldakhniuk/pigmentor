@@ -11,7 +11,7 @@ class PaletteForm extends Form
 {
     public ?Palette $palette;
 
-    #[Validate('required|min:3')]
+    #[Validate('required')]
     public string $name = '';
 
     public array $colors = [];
