@@ -7,7 +7,7 @@
 
     <flux:main>
         <form wire:submit="save" class="space-y-6">
-            <flux:input label="{{ __('Name') }}" wire:model="form.name" placeholder="Enter palette name"></flux:input>
+            <flux:input label="{{ __('Name') }}" wire:model="form.title" placeholder="Enter palette name"></flux:input>
 
             <flux:heading>
                 {{ __('Colors') }}

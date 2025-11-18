@@ -10,10 +10,10 @@ it('requires palette name', function () {
         'palette' => $palette,
     ]);
 
-    $component->set('form.name', '');
+    $component->set('form.title', '');
 
     $component->call('save')->assertHasErrors([
-        'form.name' => ['required'],
+        'form.title' => ['required'],
     ]);
 });
 
@@ -33,18 +33,18 @@ it('requires entered color to be valid hex color', function () {
 
 test('palette name can be updated', function () {
     $palette = Palette::factory()->create([
-        'name' => 'foo',
+        'title' => 'foo',
     ]);
 
     $component = Livewire::test('palettes.edit', ['palette' => $palette])
-        ->set('form.name', 'bar');
+        ->set('form.title', 'bar');
 
     $component
         ->call('save')
         ->assertHasNoErrors()
         ->assertRedirectToRoute('home');
 
-    expect($palette->refresh()->name)->toEqual('bar');
+    expect($palette->refresh()->title)->toEqual('bar');
 });
 
 test('a color can be added to palette', function () {

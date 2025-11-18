@@ -6,7 +6,7 @@ it('requires palette name', function () {
     $component = Livewire::test('palettes.create');
 
     $component->call('save')->assertHasErrors([
-        'form.name' => ['required'],
+        'form.title' => ['required'],
     ]);
 });
 
@@ -22,7 +22,7 @@ it('requires picked color to be valid hex color', function () {
 
 test('new palette can be added', function () {
     $component = Livewire::test('palettes.create')
-        ->set('form.name', fake()->word);
+        ->set('form.title', fake()->word);
 
     $component
         ->call('save')

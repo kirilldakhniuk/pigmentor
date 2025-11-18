@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Palette extends Model
 {
-    use HasFactory;
+    use HasFactory, Sortable;
 
     public function colors(): BelongsToMany
     {

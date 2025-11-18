@@ -12,14 +12,14 @@ class PaletteForm extends Form
     public ?Palette $palette;
 
     #[Validate('required')]
-    public string $name = '';
+    public string $title = '';
 
     public array $colors = [];
 
     public function setPalette(Palette $palette): void
     {
         $this->palette = $palette;
-        $this->name = $palette->name;
+        $this->title = $palette->title;
         $this->colors = $palette->colors->pluck('hex')->toArray();
     }
 
@@ -27,7 +27,7 @@ class PaletteForm extends Form
     {
         $this->validate();
 
-        $palette = Palette::create(['name' => $this->name]);
+        $palette = Palette::create(['title' => $this->title]);
 
         $this->syncColorsForPalette($palette);
     }
@@ -37,7 +37,7 @@ class PaletteForm extends Form
         $this->validate();
 
         $this->palette->update([
-            'name' => $this->name,
+            'title' => $this->title,
         ]);
 
         $this->syncColorsForPalette($this->palette);
