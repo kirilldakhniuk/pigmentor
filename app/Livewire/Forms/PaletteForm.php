@@ -51,10 +51,7 @@ class PaletteForm extends Form
 
     public function removeFromPalette(string $hexToRemove): void
     {
-        $this->colors = collect($this->colors)
-            ->reject(fn ($hex) => $hex === $hexToRemove)
-            ->values()
-            ->toArray();
+        $this->colors = array_values(array_filter($this->colors, fn ($c) => $c !== $hexToRemove));
     }
 
     public function syncColorsForPalette(Palette $palette): void

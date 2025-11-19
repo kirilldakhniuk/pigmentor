@@ -36,12 +36,9 @@ new class extends Component {
 
     public function removeColor($color): void
     {
-        $this->history = collect($this->history)
-            ->reject(fn($hex) => $hex === $color)
-            ->values()
-            ->toArray();
+        Cache::put('picks-history', array_values(array_filter($this->history, fn ($c) => $c !== $color)));
 
-        Cache::put('picks-history', $this->history);
+        $this->updateHistory();
 
         Flux::toast(
             variant: 'success',
