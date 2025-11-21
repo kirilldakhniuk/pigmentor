@@ -23,7 +23,6 @@ test('picking a color with the pipette adds it to cache history and fires color-
 });
 
 test('add new palette button navigates user to palette create view', function () {
-    $this->markTestSkipped('update to match livewire v4');
     Http::fake([
         'localhost:4000/api/clipboard/*' => Http::response(['text' => fake()->hexColor]),
     ]);
