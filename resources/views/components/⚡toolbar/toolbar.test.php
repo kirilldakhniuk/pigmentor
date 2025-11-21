@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Http;
 use Livewire\Livewire;
 
 test('picking a color with the pipette adds it to cache history and fires color-picked event', function () {
+    Http::fake();
+
     Cache::spy();
 
     Livewire::test('toolbar')
@@ -23,10 +25,6 @@ test('picking a color with the pipette adds it to cache history and fires color-
 });
 
 test('add new palette button navigates user to palette create view', function () {
-    Http::fake([
-        'localhost:4000/api/clipboard/*' => Http::response(['text' => fake()->hexColor]),
-    ]);
-
     $page = visit(route('home'))->on()->desktop();
 
     $page
