@@ -2,8 +2,8 @@
 
 namespace App\Traits;
 
+use Native\Desktop\Facades\App;
 use Native\Desktop\Facades\Clipboard;
-use Native\Desktop\Facades\MenuBar;
 
 trait ColorCopyable
 {
@@ -11,6 +11,6 @@ trait ColorCopyable
     {
         Clipboard::text($color);
 
-        MenuBar::hide();
+        App::hide();
     }
 }
