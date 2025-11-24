@@ -13,9 +13,9 @@ new class extends Component
         <livewire:toolbar />
     </flux:header>
 
-    <flux:separator />
-
     <flux:main>
-        <livewire:main />
+        <livewire:color-history />
+
+        <livewire:palettes.index />
     </flux:main>
 </div>
