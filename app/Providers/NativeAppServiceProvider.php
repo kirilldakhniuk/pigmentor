@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Native\Desktop\Contracts\ProvidesPhpIni;
+use Native\Desktop\Facades\Menu;
 use Native\Desktop\Facades\MenuBar;
 
 class NativeAppServiceProvider implements ProvidesPhpIni
@@ -14,6 +15,14 @@ class NativeAppServiceProvider implements ProvidesPhpIni
     public function boot(): void
     {
         MenuBar::create()
+            ->withContextMenu(
+                Menu::make(
+                    Menu::link('https://github.com/kirilldakhniuk/pigmentor/issues/new', 'Submit an issue')
+                        ->openInBrowser(),
+                    Menu::separator(),
+                    Menu::quit('Quit')
+                )
+            )
             ->alwaysOnTop(app()->environment('local'))
             ->icon(public_path('menuBarIconTemplate.png'))
             ->height(600);
