@@ -1,8 +1,12 @@
 <flux:accordion.item heading="{{ __('Palettes') }}" expanded>
     <div wire:sort="movePalette">
         @foreach($palettes ?? [] as $palette)
-            <flux:card size="sm" class="space-y-2 my-2" wire:key="{{ $palette->id }}"
-                       wire:sort:item="{{ $palette->id }}">
+            <flux:card
+                size="sm"
+                class="space-y-2 my-2"
+                wire:key="{{ $palette->id }}"
+                wire:sort:item="{{ $palette->id }}"
+            >
                 <div class="flex justify-between items-center">
                     <flux:heading>
                         {{ $palette->title }}
@@ -30,7 +34,7 @@
 
                 @foreach($palette->colors ?? [] as $color)
                         <flux:button
-                            wire:click="copy('{{ $color->hex }}')"
+                            wire:click="copyColor('{{ $color->hex }}')"
                             class="hover:scale-110"
                             style="background-color: {{ $color->hex }} !important"
                             x-on:contextmenu="Native.contextMenu([

@@ -3,7 +3,7 @@
         @forelse($history as $color)
                 <flux:button
                     data-test="color-box"
-                    wire:click="copy('{{ $color }}')"
+                    wire:click="copyColor('{{ $color }}')"
                     class="hover:scale-110"
                     style="background-color: {{ $color }} !important"
                     x-on:contextmenu="Native.contextMenu([
