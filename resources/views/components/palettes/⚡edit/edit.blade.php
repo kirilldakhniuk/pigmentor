@@ -14,14 +14,16 @@
             </flux:heading>
             <flux:card size="sm" class="space-y-2 mt-2">
                 @forelse($form->colors ?? [] as $color)
-                    <flux:context>
-                        <flux:button class="cursor-pointer" style="background-color: {{ $color }} !important"/>
-
-                        <flux:menu>
-                            <flux:menu.item wire:click="removeFromPalette('{{ $color }}')" icon="trash"
-                                            variant="danger">{{ __('Remove') }}</flux:menu.item>
-                        </flux:menu>
-                    </flux:context>
+                    <flux:button
+                        style="background-color: {{ $color }} !important"
+                        x-on:contextmenu="Native.contextMenu([
+                            {
+                                label: 'Delete',
+                                accelerator: 'Command+Backspace',
+                                click: async () => $wire.removeFromPalette('{{ $color }}'),
+                            },
+                        ]);"
+                    />
                 @empty
                     {{ __('No picked colors yet') }}
                 @endforelse
