@@ -1,13 +1,14 @@
 <?php
 
+use App\Traits\ColorCopyable;
 use Illuminate\Support\Facades\Cache;
 use Livewire\Attributes\On;
 use Livewire\Component;
-use Native\Desktop\Facades\Clipboard;
-use Native\Desktop\Facades\MenuBar;
 
 new class extends Component
 {
+    use ColorCopyable;
+
     public $history = [];
 
     public function mount()
@@ -26,13 +27,6 @@ new class extends Component
     public function addToHistory(string $color)
     {
         $this->setHistory(array_merge($this->history, [$color]));
-    }
-
-    public function copy($color)
-    {
-        Clipboard::text($color);
-
-        MenuBar::hide();
     }
 
     public function remove($color)
