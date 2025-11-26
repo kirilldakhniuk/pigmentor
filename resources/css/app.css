@@ -9,3 +9,19 @@
 @theme {
     --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
 }
+
+* {
+    scrollbar-width: thin;
+    scrollbar-color: oklch(var(--s)) oklch(var(--p)) !important;
+    scrollbar-width: none;
+}
+
+::-webkit-scrollbar-track {
+    background: oklch(var(--p));
+    scrollbar-width: none;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: oklch(var(--s));
+    scrollbar-width: none;
+}
