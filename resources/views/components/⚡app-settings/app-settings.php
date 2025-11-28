@@ -7,12 +7,12 @@ use Native\Desktop\Facades\Settings;
 
 new class extends Component
 {
-    public $isOpenAtLogin;
+    public $openAtLogin;
     public $keepHistory;
 
     public function mount()
     {
-        $this->isOpenAtLogin = App::openAtLogin();
+        $this->openAtLogin = App::openAtLogin();
 
         $this->keepHistory = Settings::get('keep-history', config('app.keep_history'));
     }

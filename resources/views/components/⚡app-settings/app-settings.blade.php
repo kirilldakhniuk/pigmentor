@@ -16,9 +16,9 @@
                 {{ __('Open at login') }}
             </flux:label>
 
-            <flux:switch wire:model.live="isOpenAtLogin" />
+            <flux:switch wire:model.live="openAtLogin" />
 
-            <flux:error name="isOpenAtLogin" />
+            <flux:error name="openAtLogin" />
         </flux:field>
 
 
