@@ -19,6 +19,7 @@ class NativeAppServiceProvider implements ProvidesPhpIni
             ->withContextMenu(
                 Menu::make(
                     Menu::label('Settings')
+                        ->hotkey('Cmd+,')
                         ->event(AppSettingsClicked::class),
                     Menu::link('https://github.com/kirilldakhniuk/pigmentor/issues/new', 'Submit an issue')
                         ->openInBrowser(),

@@ -20,5 +20,24 @@
 
             <flux:error name="isOpenAtLogin" />
         </flux:field>
+
+
+        <flux:field class="mt-8">
+            <flux:label>
+                {{ __('Keep History') }}
+            </flux:label>
+
+            <flux:slider min="1" max="5" wire:model.live="keepHistory">
+                @foreach (range(1, 5) as $i)
+                    <flux:slider.tick :value="$i">{{ $this->sliderValueToLabel($i) }}</flux:slider.tick>
+                @endforeach
+            </flux:slider>
+
+            <flux:separator variant="subtle" class="my-4" />
+
+            <flux:button size="xs" wire:click="eraseHistory">
+                {{ __('Erase History...')}}
+            </flux:button>
+        </flux:field>
     </flux:main>
 </div>

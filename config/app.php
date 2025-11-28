@@ -123,4 +123,19 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Keep History
+    |--------------------------------------------------------------------------
+    |
+    | This setting controls how long color history is stored.
+    | 5 — Forever
+    | 4 — Year
+    | 3 — Month
+    | 2 — Week
+    | 1 — Day
+    |
+    */
+    'keep_history' => env('KEEP_HISTORY', 3),
+
 ];
