@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Events\AppSettingsClicked;
 use Native\Desktop\Contracts\ProvidesPhpIni;
 use Native\Desktop\Facades\Menu;
 use Native\Desktop\Facades\MenuBar;
@@ -17,6 +18,8 @@ class NativeAppServiceProvider implements ProvidesPhpIni
         MenuBar::create()
             ->withContextMenu(
                 Menu::make(
+                    Menu::label('Settings')
+                        ->event(AppSettingsClicked::class),
                     Menu::link('https://github.com/kirilldakhniuk/pigmentor/issues/new', 'Submit an issue')
                         ->openInBrowser(),
                     Menu::separator(),
