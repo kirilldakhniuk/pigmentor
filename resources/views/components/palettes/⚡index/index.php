@@ -2,6 +2,7 @@
 
 use App\Models\Palette;
 use App\Traits\ColorCopyable;
+use Livewire\Attributes\On;
 use Livewire\Attributes\Renderless;
 use Livewire\Component;
 
@@ -16,20 +17,7 @@ new class extends Component
         $this->loadPalettes();
     }
 
-    public function edit($id)
-    {
-        return to_route('palettes.edit', $id);
-    }
-
-    public function delete($paletteId)
-    {
-        $palette = Palette::findOrFail($paletteId);
-
-        $palette->delete();
-
-        $this->loadPalettes();
-    }
-
+    #[On('load-palettes')]
     public function loadPalettes()
     {
         $this->palettes = Palette::orderByDesc('position')->get();
