@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\ColorPalette;
 use App\Models\Palette;
 use App\Traits\ColorCopyable;
 use Livewire\Attributes\Renderless;
@@ -10,6 +9,10 @@ use Livewire\Component;
 new class extends Component
 {
     use ColorCopyable;
+
+    protected $listeners = [
+        'palette-refresh' => '$refresh'
+    ];
 
     public Palette $palette;
 
@@ -47,6 +50,8 @@ new class extends Component
             ->firstOrFail();
 
         $color->moveInto($this->palette, $position);
+
+        $this->dispatch('palette-refresh');
     }
 
     public function edit()
