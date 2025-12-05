@@ -53,7 +53,7 @@
     <div wire:sort="moveColor" wire:sort:group="colors">
         @foreach($palette->colors as $color)
                 <flux:button
-                    wire:sort:item="{{ $color->id }}"
+                    wire:sort:item="{{ $palette->id }}:{{ $color->id }}"
                     wire:click="copyColor('{{ $color->hex }}')"
                     class="hover:scale-110"
                     style="background-color: {{ $color->hex }} !important"

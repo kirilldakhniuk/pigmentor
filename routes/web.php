@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::livewire('/', 'home')
+Route::livewire('/', 'content-view')
     ->name('home');
 
 Route::livewire('palettes/create', 'palettes.create')

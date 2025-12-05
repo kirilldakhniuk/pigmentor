@@ -1,15 +1,12 @@
 <?php
 
 use App\Models\Palette;
-use App\Traits\ColorCopyable;
 use Livewire\Attributes\On;
 use Livewire\Attributes\Renderless;
 use Livewire\Component;
 
 new class extends Component
 {
-    use ColorCopyable;
-
     public $palettes = [];
 
     public function mount(): void

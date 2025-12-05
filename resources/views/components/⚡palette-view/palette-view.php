@@ -2,12 +2,15 @@
 
 use App\Models\ColorPalette;
 use App\Models\Palette;
+use App\Traits\ColorCopyable;
 use Livewire\Attributes\Renderless;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
 
 new class extends Component
 {
+    use ColorCopyable;
+
     public Palette $palette;
 
     #[Validate('required')]
@@ -33,16 +36,14 @@ new class extends Component
     #[Renderless]
     public function moveColor($item, $position)
     {
-        $pivot = ColorPalette::query()
-            ->where('color_id', $item)
-            ->firstOrFail(['palette_id', 'position']);
+        [$sourcePaletteId, $colorId] = explode(':', $item, 2);
 
-        $sourcePalette = Palette::findOrFail($pivot->palette_id);
+        $sourcePalette = Palette::findOrFail($sourcePaletteId);
 
         $color = $sourcePalette
             ->colors()
             ->withPivot('position')
-            ->where('colors.id', $item)
+            ->where('colors.id', $colorId)
             ->firstOrFail();
 
         $color->moveInto($this->palette, $position);

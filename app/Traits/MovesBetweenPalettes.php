@@ -9,6 +9,15 @@ use Illuminate\Support\Facades\DB;
 
 trait MovesBetweenPalettes
 {
+    public static function bootMovesBetweenPalettes(): void
+    {
+        ColorPalette::creating(function (ColorPalette $pivot): void {
+            $pivot->position = ColorPalette::query()
+                ->where('palette_id', $pivot->palette_id)
+                ->max('position') + 1;
+        });
+    }
+
     public function moveInto(Palette $palette, int $position): void
     {
         DB::transaction(function () use ($palette, $position) {
