@@ -50,19 +50,22 @@
 
     </div>
 
-    @foreach($palette->colors ?? [] as $color)
-            <flux:button
-                wire:click="copyColor('{{ $color->hex }}')"
-                class="hover:scale-110"
-                style="background-color: {{ $color->hex }} !important"
-                x-on:contextmenu="Native.contextMenu([
-                    {
-                        label: 'Copy',
-                        accelerator: 'Command+c',
-                        click: async () => $wire.copyColor('{{ $color->hex }}'),
-                    },
-                ]);"
-            />
+    <div wire:sort="moveColor" wire:sort:group="colors">
+        @foreach($palette->colors as $color)
+                <flux:button
+                    wire:sort:item="{{ $color->id }}"
+                    wire:click="copyColor('{{ $color->hex }}')"
+                    class="hover:scale-110"
+                    style="background-color: {{ $color->hex }} !important"
+                    x-on:contextmenu="Native.contextMenu([
+                        {
+                            label: 'Copy',
+                            accelerator: 'Command+c',
+                            click: async () => $wire.copyColor('{{ $color->hex }}'),
+                        },
+                    ]);"
+                />
 
-    @endforeach
+        @endforeach
+    </div>
 </flux:card>

@@ -12,7 +12,7 @@ class ColorFactory extends Factory
     public function definition(): array
     {
         return [
-            'hex' => $this->faker->word(),
+            'hex' => $this->faker->hexColor,
         ];
     }
 }
