@@ -13,6 +13,8 @@ it('dispatches event when color is picked', function () {
 });
 
 test('add new palette button navigates user to palette create view', function () {
+    Http::fake();
+
     $page = visit(route('home'))->on()->desktop();
 
     $page
