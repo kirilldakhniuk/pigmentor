@@ -12,9 +12,44 @@ trait MovesBetweenPalettes
     public static function bootMovesBetweenPalettes(): void
     {
         ColorPalette::creating(function (ColorPalette $pivot): void {
-            $pivot->position = ColorPalette::query()
-                ->where('palette_id', $pivot->palette_id)
-                ->max('position') + 1;
+            if ($pivot->position === null) {
+                $pivot->position = ColorPalette::query()
+                    ->where('palette_id', $pivot->palette_id)
+                    ->max('position') + 1;
+            }
+        });
+    }
+
+    public function addToPalette(Palette $palette, int $position): void
+    {
+        DB::transaction(function () use ($palette, $position) {
+            $exists = ColorPalette::query()
+                ->where('palette_id', $palette->id)
+                ->where('color_id', $this->id)
+                ->exists();
+
+            if ($exists) {
+                return;
+            }
+
+            $position = max(0, $position);
+
+            $count = ColorPalette::query()
+                ->where('palette_id', $palette->id)
+                ->count();
+
+            $position = min($position, $count) + 1;
+
+            ColorPalette::query()
+                ->where('palette_id', $palette->id)
+                ->where('position', '>=', $position)
+                ->increment('position');
+
+            ColorPalette::query()->create([
+                'palette_id' => $palette->id,
+                'color_id' => $this->id,
+                'position' => $position,
+            ]);
         });
     }
 

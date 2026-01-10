@@ -48,11 +48,28 @@ new class extends Component
     #[On('color-picked')]
     public function addToHistory(string $color)
     {
+        if (in_array($color, $this->history)) {
+            return;
+        }
+
         $this->setHistory(array_merge($this->history, [$color]));
     }
 
+    #[On('remove-from-history')]
     public function remove($color)
     {
         $this->setHistory(array_values(array_filter($this->history, fn ($c) => $c !== $color)));
+    }
+
+    public function reorderHistory($item, $position)
+    {
+        [$source, $value] = explode(':', $item, 2);
+
+        if ($source !== 'history') {
+            $this->dispatch('palette-refresh');
+            return;
+        }
+
+        $this->setHistory(array_values(array_filter($this->history, fn ($c) => $c !== $value)));
     }
 };

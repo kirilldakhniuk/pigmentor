@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Color;
 use App\Models\Palette;
 use App\Traits\ColorCopyable;
 use Livewire\Attributes\Renderless;
@@ -39,17 +40,32 @@ new class extends Component
     #[Renderless]
     public function moveColor($item, $position)
     {
-        [$sourcePaletteId, $colorId] = explode(':', $item, 2);
+        [$source, $value] = explode(':', $item, 2);
 
-        $sourcePalette = Palette::findOrFail($sourcePaletteId);
+        if ($source === 'history') {
+            $color = Color::firstOrCreate(['hex' => $value]);
 
-        $color = $sourcePalette
-            ->colors()
-            ->withPivot('position')
-            ->where('colors.id', $colorId)
-            ->firstOrFail();
+            $color->addToPalette($this->palette, $position);
 
-        $color->moveInto($this->palette, $position);
+            $this->dispatch('remove-from-history', color: $value);
+        } else {
+            $sourcePalette = Palette::findOrFail($source);
+
+            $color = $sourcePalette
+                ->colors()
+                ->withPivot('position')
+                ->where('colors.id', $value)
+                ->firstOrFail();
+
+            $color->moveInto($this->palette, $position);
+        }
+
+        $this->dispatch('palette-refresh');
+    }
+
+    public function remove(Color $color)
+    {
+        $this->palette->colors()->detach($color->id);
 
         $this->dispatch('palette-refresh');
     }

@@ -63,6 +63,11 @@
                             accelerator: 'Command+c',
                             click: async () => $wire.copyColor('{{ $color->hex }}'),
                         },
+                        {
+                            label: 'Delete',
+                            accelerator: 'Command+Backspace',
+                            click: async () => $wire.remove('{{ $color->id }}'),
+                        },
                     ]);"
                 />
 
