@@ -1,9 +1,9 @@
 <div>
-    <flux:heading>
+    <h3 class="heading-label mb-2">
         {{ __('Palettes') }}
-    </flux:heading>
+    </h3>
 
-    <div wire:sort="movePalette">
+    <div wire:sort="movePalette" class="space-y-1">
         @forelse($palettes as $palette)
             <livewire:palette-view
                 :$palette
@@ -11,9 +11,7 @@
                 wire:sort:item="{{ $palette->id }}"
             />
         @empty
-            <flux:text>
-                {{ __('No Palettes') }}
-            </flux:text>
+            <p class="text-muted text-sm">{{ __('No palettes yet') }}</p>
         @endforelse
     </div>
 </div>

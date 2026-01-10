@@ -27,6 +27,7 @@ class NativeAppServiceProvider implements ProvidesPhpIni
                     Menu::quit('Quit')
                 )
             )
+            ->vibrancy('sidebar')
             ->alwaysOnTop(app()->environment('local'))
             ->icon(public_path('menuBarIconTemplate.png'))
             ->height(600);

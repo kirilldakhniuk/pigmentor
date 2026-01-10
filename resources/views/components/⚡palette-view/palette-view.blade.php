@@ -1,19 +1,18 @@
-<flux:card
-    :$attributes
-    size="sm"
-    class="space-y-2 my-2"
+<div
+    {{ $attributes->class(['card-refined p-4 my-3']) }}
 >
     <div
         x-cloak
         x-data="{ isNotEditing: true }"
-        class="flex justify-between items-center"
+        class="flex justify-between items-center mb-3"
     >
-        <flux:heading
+        <h3
             @dblclick="isNotEditing = false"
             x-show="isNotEditing"
+            class="heading-section text-sm"
         >
             {{ $palette->title }}
-        </flux:heading>
+        </h3>
 
         <form
             @click.outside="isNotEditing = true"
@@ -32,13 +31,14 @@
 
         <flux:button
             icon="ellipsis-horizontal"
-            variant="subtle"
-            class="hover:bg-transparent!"
+            variant="ghost"
+            size="sm"
+            class="opacity-50 hover:opacity-100 transition-fast"
             x-on:click="Native.contextMenu([
                 {
                     label: 'Edit',
                     accelerator: 'Command+e',
-                    click: async () => $wire.edit(),
+                    click: () => $dispatch('open-palette-panel', { id: {{ $palette->id }} }),
                 },
                 {
                     label: 'Delete',
@@ -47,30 +47,29 @@
                 },
             ]);"
         />
-
     </div>
 
-    <div wire:sort="moveColor" wire:sort:group="colors">
+    <div wire:sort="moveColor" wire:sort:group="colors" class="flex flex-wrap gap-2">
         @foreach($palette->colors as $color)
-                <flux:button
-                    wire:sort:item="{{ $palette->id }}:{{ $color->id }}"
-                    wire:click="copyColor('{{ $color->hex }}')"
-                    class="hover:scale-110"
-                    style="background-color: {{ $color->hex }} !important"
-                    x-on:contextmenu="Native.contextMenu([
-                        {
-                            label: 'Copy',
-                            accelerator: 'Command+c',
-                            click: async () => $wire.copyColor('{{ $color->hex }}'),
-                        },
-                        {
-                            label: 'Delete',
-                            accelerator: 'Command+Backspace',
-                            click: async () => $wire.remove('{{ $color->id }}'),
-                        },
-                    ]);"
-                />
-
+            <button
+                type="button"
+                wire:sort:item="{{ $palette->id }}:{{ $color->id }}"
+                wire:click="copyColor('{{ $color->hex }}')"
+                class="color-swatch w-8 h-8 rounded-lg cursor-pointer border-0"
+                style="background-color: {{ $color->hex }}"
+                x-on:contextmenu="Native.contextMenu([
+                    {
+                        label: 'Copy',
+                        accelerator: 'Command+c',
+                        click: async () => $wire.copyColor('{{ $color->hex }}'),
+                    },
+                    {
+                        label: 'Delete',
+                        accelerator: 'Command+Backspace',
+                        click: async () => $wire.remove('{{ $color->id }}'),
+                    },
+                ]);"
+            ></button>
         @endforeach
     </div>
-</flux:card>
+</div>

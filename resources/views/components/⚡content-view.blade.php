@@ -12,11 +12,13 @@ new class extends Component
     <livewire:toolbar />
 </flux:header>
 
-<flux:main>
+<flux:main class="surface-base p-4">
     <livewire:color-history />
 
-    <flux:separator class="my-6" />
+    <div class="my-6"></div>
 
     <livewire:palettes-view />
 </flux:main>
+
+<livewire:palette-panel />
 

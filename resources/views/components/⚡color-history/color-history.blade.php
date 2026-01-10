@@ -1,16 +1,21 @@
 <div>
-    <flux:heading>
-        {{ __('Color History') }}
-    </flux:heading>
+    <h3 class="heading-label mb-2">
+        {{ __('History') }}
+    </h3>
 
-    <flux:card size="sm" class="space-y-2 mt-2" wire:sort="reorderHistory" wire:sort:group="colors">
+    <div
+        class="card-refined p-3"
+        wire:sort="reorderHistory"
+        wire:sort:group="colors"
+    >
         @forelse($history as $color)
-            <flux:button
+            <button
+                type="button"
                 wire:sort:item="history:{{ $color }}"
                 data-test="color-box"
                 wire:click="copyColor('{{ $color }}')"
-                class="hover:scale-110"
-                style="background-color: {{ $color }} !important"
+                class="color-swatch w-8 h-8 rounded-lg cursor-pointer border-0 mr-2 mb-2"
+                style="background-color: {{ $color }}"
                 x-on:contextmenu="Native.contextMenu([
                     {
                         label: 'Copy',
@@ -23,9 +28,9 @@
                         click: async () => $wire.remove('{{ $color }}'),
                     },
                 ]);"
-            />
+            ></button>
         @empty
-            {{ __('No history yet') }}
+            <p class="text-muted text-sm">{{ __('No history yet') }}</p>
         @endforelse
-    </flux:card>
+    </div>
 </div>
