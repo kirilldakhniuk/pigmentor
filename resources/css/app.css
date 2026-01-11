@@ -72,7 +72,7 @@ input { @apply outline-none; }
     transition-duration: 100ms;
 }
 
-.card-refined {
+.card {
     background-color: hsl(var(--surface-raised));
     border: 1px solid hsl(var(--border-subtle));
     border-radius: 12px;

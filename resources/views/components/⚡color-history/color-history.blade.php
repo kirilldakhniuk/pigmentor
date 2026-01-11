@@ -4,7 +4,7 @@
     </h3>
 
     <div
-        class="card-refined p-3 grid grid-cols-[repeat(auto-fill,2rem)] gap-2"
+        class="card p-3 flex flex-wrap gap-2"
         wire:sort="reorderHistory"
         wire:sort:group="colors"
     >

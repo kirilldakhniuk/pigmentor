@@ -1,5 +1,5 @@
 <div
-    {{ $attributes->class(['card-refined p-4 my-3']) }}
+    {{ $attributes->class(['card p-4 my-3']) }}
 >
     <div
         x-cloak

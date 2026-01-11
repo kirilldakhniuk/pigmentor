@@ -1,43 +1,43 @@
 <div>
-    <flux:sidebar class="bg-zinc-50 dark:bg-zinc-900 border-r border-zinc-200 dark:border-zinc-700 min-h-screen">
-        <flux:sidebar.header />
-        <flux:sidebar.nav>
-            <flux:sidebar.item icon="cog" current>{{ __('General') }}</flux:sidebar.item>
-        </flux:sidebar.nav>
-    </flux:sidebar>
+    <flux:header class="justify-center">
+        <flux:heading size="lg">
+            {{ __('Settings') }}
+        </flux:heading>
+    </flux:header>
 
-    <flux:main>
-        <flux:heading size="lg" level="1">{{ __('General') }}</flux:heading>
+    <flux:main class="surface-base p-4">
+        <div class="card p-4 mb-4">
+            <flux:heading size="sm" class="heading-label mb-4">
+                {{ __('Startup') }}
+            </flux:heading>
 
-        <flux:separator variant="subtle" class="my-6" />
+            <div class="flex items-center justify-between">
+                <flux:text size="sm">
+                    {{ __('Open at login') }}
+                </flux:text>
 
-        <flux:field variant="inline">
-            <flux:label>
-                {{ __('Open at login') }}
-            </flux:label>
+                <flux:switch wire:model.live="openAtLogin" />
+            </div>
+        </div>
 
-            <flux:switch wire:model.live="openAtLogin" />
-
-            <flux:error name="openAtLogin" />
-        </flux:field>
-
-
-        <flux:field class="mt-8">
-            <flux:label>
-                {{ __('Keep History') }}
-            </flux:label>
+        <div class="card p-4">
+            <flux:heading size="sm" class="heading-label mb-4">
+                {{ __('History') }}
+            </flux:heading>
 
             <flux:slider min="1" max="5" wire:model.live="keepHistory">
                 @foreach (range(1, 5) as $i)
-                    <flux:slider.tick :value="$i">{{ $this->sliderValueToLabel($i) }}</flux:slider.tick>
+                    <flux:slider.tick :value="$i">
+                        {{ $this->sliderValueToLabel($i) }}
+                    </flux:slider.tick>
                 @endforeach
             </flux:slider>
 
-            <flux:separator variant="subtle" class="my-4" />
+            <flux:separator class="my-3" />
 
-            <flux:button size="xs" wire:click="eraseHistory">
-                {{ __('Erase History...')}}
+            <flux:button variant="ghost" size="xs" wire:click="eraseHistory" class="text-red-500! hover:text-red-600! dark:text-red-400!">
+                {{ __('Erase History...') }}
             </flux:button>
-        </flux:field>
+        </div>
     </flux:main>
 </div>
