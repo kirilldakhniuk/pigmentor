@@ -1,3 +1,7 @@
+# 1.3.0
+- Design refreshed
+- Added ability to drag colors from history to the palette
+
 # 1.2.0
 - Added Settings Window
 - Added Keep History Interval
