@@ -11,6 +11,7 @@ new class extends Component
     public string $title = '';
     public string $newHex = '';
     public bool $isCreateMode = false;
+    public bool $showPanel = false;
 
     #[On('open-palette-panel')]
     public function loadPalette(int $id): void
@@ -18,6 +19,7 @@ new class extends Component
         $this->isCreateMode = false;
         $this->palette = Palette::with('colors')->find($id);
         $this->title = $this->palette?->title ?? '';
+        $this->showPanel = true;
     }
 
     #[On('create-palette-panel')]
@@ -27,6 +29,7 @@ new class extends Component
         $this->palette = null;
         $this->title = '';
         $this->newHex = '';
+        $this->showPanel = true;
     }
 
     public function createPalette(): void
@@ -37,8 +40,8 @@ new class extends Component
 
         $this->palette = Palette::create(['title' => $this->title]);
         $this->isCreateMode = false;
+        $this->showPanel = false;
         $this->dispatch('load-palettes');
-        $this->dispatch('close-palette-panel');
     }
 
     public function updatedTitle(): void
@@ -91,7 +94,12 @@ new class extends Component
 
         $this->palette->delete();
         $this->palette = null;
-        $this->dispatch('close-palette-panel');
+        $this->showPanel = false;
         $this->dispatch('load-palettes');
+    }
+
+    public function closePanel(): void
+    {
+        $this->showPanel = false;
     }
 };

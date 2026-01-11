@@ -43,11 +43,29 @@
                 {
                     label: 'Delete',
                     accelerator: 'Command+d',
-                    click: async () => $wire.delete(),
+                    click: () => Flux.modal('confirm-delete-{{ $palette->id }}').show(),
                 },
             ]);"
         />
     </div>
+
+    <flux:modal name="confirm-delete-{{ $palette->id }}" class="max-w-xs">
+        <div class="space-y-4">
+            <div>
+                <flux:heading size="lg">Delete "{{ $palette->title }}"?</flux:heading>
+                <flux:text class="mt-2">This action cannot be undone. The palette will be permanently removed.</flux:text>
+            </div>
+
+            <div class="flex justify-end gap-2 pt-2">
+                <flux:modal.close>
+                    <flux:button variant="ghost" size="sm">Cancel</flux:button>
+                </flux:modal.close>
+                <flux:button wire:click="delete" variant="danger" size="sm">
+                    Delete Palette
+                </flux:button>
+            </div>
+        </div>
+    </flux:modal>
 
     <div wire:sort="moveColor" wire:sort:group="colors" class="flex flex-wrap gap-2">
         @foreach($palette->colors as $color)

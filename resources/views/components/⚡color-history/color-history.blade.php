@@ -4,7 +4,7 @@
     </h3>
 
     <div
-        class="card-refined p-3"
+        class="card-refined p-3 grid grid-cols-[repeat(auto-fill,2rem)] gap-2"
         wire:sort="reorderHistory"
         wire:sort:group="colors"
     >
@@ -14,7 +14,7 @@
                 wire:sort:item="history:{{ $color }}"
                 data-test="color-box"
                 wire:click="copyColor('{{ $color }}')"
-                class="color-swatch w-8 h-8 rounded-lg cursor-pointer border-0 mr-2 mb-2"
+                class="color-swatch w-8 h-8 rounded-lg cursor-pointer border-0"
                 style="background-color: {{ $color }}"
                 x-on:contextmenu="Native.contextMenu([
                     {

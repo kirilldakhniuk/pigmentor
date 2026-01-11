@@ -31,7 +31,6 @@ class NativeAppServiceProvider implements ProvidesPhpIni
             ->alwaysOnTop(app()->environment('local'))
             ->icon(public_path('menuBarIconTemplate.png'))
             ->height(600);
-
     }
 
     /**
