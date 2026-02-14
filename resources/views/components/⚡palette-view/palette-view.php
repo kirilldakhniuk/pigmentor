@@ -6,6 +6,7 @@ use App\Traits\ColorCopyable;
 use Livewire\Attributes\Renderless;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
+use Native\Desktop\Facades\Window;
 
 new class extends Component
 {
@@ -75,10 +76,25 @@ new class extends Component
         return to_route('palettes.edit', $this->palette->id);
     }
 
-    public function delete()
+    public function delete(): void
     {
         $this->palette->delete();
 
         $this->dispatch('load-palettes');
+    }
+
+    public function openFloatingWindow(): void
+    {
+        Window::open('floating-palette-'.$this->palette->id)
+            ->titleBarHidden()
+            ->trafficLightsHidden()
+            ->vibrancy('sidebar')
+            ->showDevTools(false)
+            ->webPreferences(['devTools' => false])
+            ->resizable(false)
+            ->alwaysOnTop()
+            ->width(56)
+            ->height(326)
+            ->url(route('floating.palette', $this->palette));
     }
 };

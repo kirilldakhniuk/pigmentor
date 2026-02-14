@@ -7,3 +7,6 @@ Route::livewire('/', 'content-view')
 
 Route::livewire('app-settings', 'app-settings')
     ->name('app.settings');
+
+Route::livewire('floating-palette/{palette}', 'floating-palette')
+    ->name('floating.palette');

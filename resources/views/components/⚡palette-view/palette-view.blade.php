@@ -41,6 +41,11 @@
                     click: () => $dispatch('open-palette-panel', { id: {{ $palette->id }} }),
                 },
                 {
+                    label: 'Float',
+                    accelerator: 'Command+f',
+                    click: () => $wire.openFloatingWindow(),
+                },
+                {
                     label: 'Delete',
                     accelerator: 'Command+d',
                     click: () => Flux.modal('confirm-delete-{{ $palette->id }}').show(),
